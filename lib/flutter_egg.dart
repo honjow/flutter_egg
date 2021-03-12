@@ -6,15 +6,15 @@ typedef OnTapCallBack = void Function(int tapNum, int neededNum);
 
 /// 隐藏彩蛋,多次点击后触发
 class Egg extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
 
   /// 总共需要点击的次数
   final int neededNum;
 
   /// 两次点击的间隔
   final Duration interval;
-  final OnTapCallBack onTrigger;
-  final OnTapCallBack onTap;
+  final OnTapCallBack? onTrigger;
+  final OnTapCallBack? onTap;
 
   Egg({
     this.child,
@@ -40,7 +40,7 @@ class _EggState extends State<Egg> {
   }
 
   handleOnTap() {
-    DateTime lastPressedAt = tapTimeList.length > 0 ? tapTimeList.last : null;
+    DateTime? lastPressedAt = tapTimeList.length > 0 ? tapTimeList.last : null;
     DateTime now = DateTime.now();
 
     // 不超过点击间隔,tapTimeList 添加当前点击时刻
@@ -51,7 +51,7 @@ class _EggState extends State<Egg> {
       // 到达条件,触发隐藏功能
       if (tapTimeList.length >= widget.neededNum) {
         if (widget.onTrigger != null) {
-          widget.onTrigger(tapTimeList.length, widget.neededNum);
+          widget.onTrigger!(tapTimeList.length, widget.neededNum);
         }
         // 清空记录点击列表
         tapTimeList.clear();
@@ -64,7 +64,7 @@ class _EggState extends State<Egg> {
 
     // 每次都触发的 tap 事件
     if (widget.onTap != null) {
-      widget.onTap(tapTimeList.length, widget.neededNum);
+      widget.onTap!(tapTimeList.length, widget.neededNum);
     }
   }
 }
